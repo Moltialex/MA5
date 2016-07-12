@@ -23,17 +23,17 @@ bool cms_exo_15_001::Initialize(const MA5::Configuration& cfg, const std::map<st
         // initialize variables, histos
         Manager()->AddRegionSelection("All");
         Manager()->AddRegionSelection("wide-jet");
-        Manager()->AddRegionSelection("mass> 1.2");
+        Manager()->AddRegionSelection("mass> 1.2 TeV");
 
         Manager()->AddCut("trigger");
 
-        string SRForWideJetCut[]= {"wide-jet","mass> 1.2"};
+        string SRForWideJetCut[]= {"wide-jet","mass> 1.2 TeV"};
         Manager()->AddCut("2+ jets", SRForWideJetCut);
         //Manager()->AddCut("deltaR (leading jet, jet)< 1.1");
         Manager()->AddCut("delta eta (wide jet, wide jet)< 1.3", SRForWideJetCut);
 
-        string SRForMassCut[]= {"mass> 1.2"};
-        Manager()->AddCut("mjj> 1.2", SRForMassCut);
+        string SRForMassCut[]= {"mass> 1.2 TeV"};
+        Manager()->AddCut("mjj> 1.2 TeV", SRForMassCut);
 
         Manager()->AddHisto("invariant mass", 800, 0, 8000, SRForMassCut);
         Manager()->AddHisto("pT leading jet", 350, 0, 3500, SRForMassCut);
@@ -131,7 +131,7 @@ bool cms_exo_15_001::Execute(SampleFormat& sample, const EventFormat& event)
                 TLorentzVector mom= widejetone+widejettwo;
                 double mass= mom.M();
 
-                if(!Manager()->ApplyCut(mass> 1200, "mjj> 1.2")){
+                if(!Manager()->ApplyCut(mass> 1200, "mjj> 1.2 TeV")){
                         return true;
                 }
                 
