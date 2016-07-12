@@ -146,7 +146,7 @@ bool cms_exo_15_001::Execute(SampleFormat& sample, const EventFormat& event)
                 }
 
                 //Fill the histograms
-                Manager()->FillHisto("invariante mass", mass);
+                Manager()->FillHisto("invariant mass", mass);
                 Manager()->FillHisto("pT leading jet", mom.Pt());
                 Manager()->FillHisto("eta leading jet", mom.Eta());
 
