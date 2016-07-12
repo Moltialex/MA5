@@ -35,7 +35,7 @@ bool cms_exo_15_001::Initialize(const MA5::Configuration& cfg, const std::map<st
         string SRForMassCut[]= {"mass> 1.2"};
         Manager()->AddCut("mjj> 1.2", SRForMassCut);
 
-        Manager()->AddHisto("invariante mass", 800, 0, 8000, SRForMassCut);
+        Manager()->AddHisto("invariant mass", 800, 0, 8000, SRForMassCut);
         Manager()->AddHisto("pT leading jet", 350, 0, 3500, SRForMassCut);
         Manager()->AddHisto("eta leading jet", 30, -3, 3, SRForMassCut);
 
