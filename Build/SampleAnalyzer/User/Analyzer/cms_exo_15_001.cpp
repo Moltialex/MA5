@@ -38,7 +38,8 @@ bool cms_exo_15_001::Initialize(const MA5::Configuration& cfg, const std::map<st
         Manager()->AddCut("mjj> 1.2 TeV", SRForMassCut);
 
         //Declare all histograms
-        Manager()->AddHisto("invariant mass", 800, 0, 8000, SRForMassCut);
+        Manager()->AddHisto("mass before cut", 800, 0, 8000, SRForWideJetCut);
+        Manager()->AddHisto("invariant mass", 27, 1200, 6400, SRForMassCut);
         Manager()->AddHisto("pT leading jet", 350, 0, 3500, SRForMassCut);
         Manager()->AddHisto("eta leading jet", 30, -3, 3, SRForMassCut);
 
@@ -108,7 +109,9 @@ bool cms_exo_15_001::Execute(SampleFormat& sample, const EventFormat& event)
                 SORTER->sort(myJets);
 
                 //Check number of jets inside the container
-                if(Manager()->ApplyCut(myJets.size()>1, "2+ jets")){
+                if(!Manager()->ApplyCut(myJets.size()>1, "2+ jets")) return true;
+                
+                if(myJets.size()>1){
                         //Leading jet become wide-jet
                         widejetone= myJets[0]->momentum();
                         widejettwo= myJets[1]->momentum();
@@ -139,6 +142,7 @@ bool cms_exo_15_001::Execute(SampleFormat& sample, const EventFormat& event)
                 TLorentzVector mom= widejetone+widejettwo;
                 //Compute the invariant mass
                 double mass= mom.M();
+                Manager()->FillHisto("mass before cut", mass);
 
                 //Keep the invariant mass> 1.2 TeV
                 if(!Manager()->ApplyCut(mass> 1200, "mjj> 1.2 TeV")){
